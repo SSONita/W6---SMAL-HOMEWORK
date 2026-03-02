@@ -4,6 +4,8 @@ import 'package:nested/nested.dart';
 import 'main_common.dart';
 import 'data/repositories/songs/song_repository.dart';
 import 'data/repositories/songs/song_repository_mock.dart';
+import 'data/repositories/settings/app_settings_repository.dart';
+import 'data/repositories/settings/app_settings_repository_mock.dart';
 import 'ui/states/player_state.dart';
 import 'ui/states/settings_state.dart';
 
@@ -13,11 +15,17 @@ List<SingleChildWidget> get devProviders {
     // 1 - Inject the song repository
     Provider<SongRepository>(create: (_) => SongRepositoryMock()),
 
+    // new - Inject AppSettings Repository
+    Provider<AppSettingsRepository>(create: (_) => AppSettingsRepositoryMock()),
+
     // 2 - Inject the player state
     ChangeNotifierProvider<PlayerState>(create: (_) => PlayerState()),
 
     // 3 - Inject the  app setting state
-    ChangeNotifierProvider<AppSettingsState>(create: (_) => AppSettingsState()),
+    ChangeNotifierProvider<AppSettingsState>(
+      create: (context) =>
+          AppSettingsState(context.read()<AppSettingsRepository>())..init(),
+    ),
   ];
 }
 
