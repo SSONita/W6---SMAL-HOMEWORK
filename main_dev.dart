@@ -24,7 +24,7 @@ List<SingleChildWidget> get devProviders {
     // 3 - Inject the  app setting state
     ChangeNotifierProvider<AppSettingsState>(
       create: (context) =>
-          AppSettingsState(context.read()<AppSettingsRepository>())..init(),
+          AppSettingsState(context.read<AppSettingsRepository>())..init(),
     ),
   ];
 }
